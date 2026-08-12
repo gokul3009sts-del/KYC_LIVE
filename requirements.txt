@@ -23,5 +23,6 @@ marshmallow==3.21.3
 flasgger==0.9.7.1
 PyJWT==2.8.0
 requests>=2.31.0
+gunicorn
 
 # twilio removed — OTPs go over WhatsApp (tesepr WAAS), see waas_service.py
