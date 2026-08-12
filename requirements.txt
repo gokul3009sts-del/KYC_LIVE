@@ -1,0 +1,27 @@
+# NBAWORLD.IN — user portal
+# Works on Python 3.10 through 3.14.
+
+flask==3.0.3
+flask-jwt-extended==4.6.0
+flask-limiter==3.7.0
+flask-cors==4.0.1
+
+SQLAlchemy==2.0.31
+
+# PostgreSQL driver.
+# 2.9.9 has NO wheel for Python 3.13/3.14 — pip falls back to compiling
+# from C source, which fails with "unresolved external symbol
+# _PyInterpreterState_Get". 2.9.12 ships a cp314 wheel.
+# If this still fails, run instead:  pip install "psycopg[binary]"
+# config.py detects whichever driver is present.
+psycopg2-binary>=2.9.12
+
+bcrypt==4.1.3
+cryptography==42.0.8
+python-dotenv==1.0.1
+marshmallow==3.21.3
+flasgger==0.9.7.1
+PyJWT==2.8.0
+requests>=2.31.0
+
+# twilio removed — OTPs go over WhatsApp (tesepr WAAS), see waas_service.py
