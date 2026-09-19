@@ -1,0 +1,45 @@
+This file documents the exact changes to make to
+android/app/src/main/AndroidManifest.xml after running `flutter create .`
+(see README.md, Step 2). Flutter's default manifest already has an
+<application> block — just add the lines below inside it / above it as shown.
+
+--------------------------------------------------------------------
+Add these <uses-permission> tags ABOVE the <application> tag:
+--------------------------------------------------------------------
+
+    <!-- Bluetooth (for Bluetooth thermal printers). Android 12+ uses the
+         new runtime-permission model; older versions fall back to the
+         classic BLUETOOTH permissions. No internet permission is used
+         anywhere in this app. -->
+    <uses-permission android:name="android.permission.BLUETOOTH" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" android:maxSdkVersion="30" />
+    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+
+    <!-- Needed on Android 9 and below only, for writing export/backup files
+         to shared storage. Not required on Android 10+ because the app uses
+         its own scoped app-external-files directory. -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+
+--------------------------------------------------------------------
+Inside the <application ...> tag, make sure requestLegacyExternalStorage
+is present for compatibility with older Android versions:
+--------------------------------------------------------------------
+
+    <application
+        android:label="SIK"
+        android:name="${applicationName}"
+        android:icon="@mipmap/ic_launcher"
+        android:requestLegacyExternalStorage="true">
+
+--------------------------------------------------------------------
+No <uses-permission android:name="android.permission.INTERNET" /> is added
+anywhere, and none of the plugins used (sqflite, path_provider, printing,
+share_plus, file_picker, csv, permission_handler, crypto) require internet
+access to function. The app will build and run correctly with Wi-Fi,
+mobile data, and internet fully disabled.
